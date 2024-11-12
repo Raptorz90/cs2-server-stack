@@ -1,0 +1,155 @@
+name: raptorz-cs-server
+services:
+    portainer-ce:
+        ports:
+            - 8000:8000
+            - 9443:9443
+        container_name: portainer
+        restart: unless-stopped
+        security_opt:
+           - no-new-privileges:true
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./portainer:/data
+        image: portainer/portainer-ce:latest
+
+    tmt2:
+        container_name: tmt2
+        restart: unless-stopped
+        security_opt:
+            - no-new-privileges:true
+        environment:
+            - TMT_SAY_PREFIX=[Raptorz-Lan]
+        ports:
+            - 8080:8080
+        volumes:
+            - ./tmt2:/app/backend/storage
+        image: jensforstmann/tmt2:latest
+        
+    dozzle:
+        container_name: dozzle
+        restart: unless-stopped
+        security_opt:
+            - no-new-privileges:true
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - 8090:8080
+        image: amir20/dozzle:latest
+        
+    cs2-server-1:
+      image: joedwards32/cs2:latest
+      container_name: cs-1
+      environment:
+        # Server configuration
+        - SRCDS_TOKEN=changeme
+        - STEAMAPPVALIDATE=0
+        - CS2_SERVERNAME=Raptorz-Lan CS2 Server 1
+        - CS2_CHEATS=0
+        - CS2_PORT=27015
+        - CS2_SERVER_HIBERNATE=0
+        - CS2_RCON_PORT
+        - CS2_LAN=1
+        - CS2_RCONPW=changeme
+        - CS2_PW=changeme
+        - CS2_MAXPLAYERS=10
+        # Game modes
+        - CS2_GAMEALIAS
+        - CS2_GAMETYPE=0
+        - CS2_GAMEMODE=1
+        - CS2_MAPGROUP=mg_active
+        - CS2_STARTMAP=de_inferno
+        # TV
+        - TV_AUTORECORD=0
+        - TV_ENABLE=0  
+        # Logs
+        - CS2_LOG=on
+        - CS2_LOG_MONEY=1
+        - CS2_LOG_DETAIL=3
+        - CS2_LOG_ITEMS=1
+      volumes:
+        - cs1:/home/steam/cs2-dedicated/
+      ports:
+        - 27015:27015
+      stdin_open: true
+      tty: true
+      
+    cs2-server-2:
+      image: joedwards32/cs2:latest
+      container_name: cs-2
+      environment:
+        # Server configuration
+        - SRCDS_TOKEN=changeme
+        - STEAMAPPVALIDATE=0
+        - CS2_SERVERNAME=Raptorz-Lan CS2 Server 2
+        - CS2_CHEATS=0
+        - CS2_PORT=27015
+        - CS2_SERVER_HIBERNATE=0
+        - CS2_RCON_PORT
+        - CS2_LAN=1
+        - CS2_RCONPW=changeme
+        - CS2_PW=changeme
+        - CS2_MAXPLAYERS=10
+        # Game modes
+        - CS2_GAMEALIAS
+        - CS2_GAMETYPE=0
+        - CS2_GAMEMODE=1
+        - CS2_MAPGROUP=mg_active
+        - CS2_STARTMAP=de_nuke
+        # TV
+        - TV_AUTORECORD=0
+        - TV_ENABLE=0
+        # Logs
+        - CS2_LOG=on
+        - CS2_LOG_MONEY=1
+        - CS2_LOG_DETAIL=3
+        - CS2_LOG_ITEMS=1
+      volumes:
+        - cs2:/home/steam/cs2-dedicated/
+      ports:
+        - 27025:27015
+      stdin_open: true
+      tty: true
+      
+    cs2-server-3:
+      image: joedwards32/cs2:latest
+      container_name: cs-3
+      environment:
+        # Server configuration
+        - SRCDS_TOKEN=changeme
+        - STEAMAPPVALIDATE=0
+        - CS2_SERVERNAME=Raptorz-Lan CS2 Server 3
+        - CS2_CHEATS=0
+        - CS2_PORT=27015
+        - CS2_SERVER_HIBERNATE=0
+        - CS2_RCON_PORT
+        - CS2_LAN=1
+        - CS2_RCONPW=changeme
+        - CS2_PW=changeme
+        - CS2_MAXPLAYERS=10
+        # Game modes
+        - CS2_GAMEALIAS
+        - CS2_GAMETYPE=0
+        - CS2_GAMEMODE=1
+        - CS2_MAPGROUP=mg_active
+        - CS2_STARTMAP=de_vertigo
+        # TV
+        - TV_AUTORECORD=0
+        - TV_ENABLE=0
+          # Logs
+        - CS2_LOG=on
+        - CS2_LOG_MONEY=1
+        - CS2_LOG_DETAIL=3
+        - CS2_LOG_ITEMS=1
+      volumes:
+        - cs3:/home/steam/cs2-dedicated/
+      ports:
+        - 27035:27015
+      stdin_open: true
+      tty: true
+      
+volumes:
+    cs1:
+    cs2:
+    cs3:
+   
