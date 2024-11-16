@@ -70,7 +70,8 @@ services:
       volumes:
         - cs1:/home/steam/cs2-dedicated/
       ports:
-        - 27015:27015
+        - "27015:27015/tcp"
+        - "27015:27015/udp"
       stdin_open: true
       tty: true
       
@@ -107,7 +108,8 @@ services:
       volumes:
         - cs2:/home/steam/cs2-dedicated/
       ports:
-        - 27025:27015
+        - "27025:27015/tcp"
+        - "27025:27015/udp"
       stdin_open: true
       tty: true
       
@@ -144,7 +146,8 @@ services:
       volumes:
         - cs3:/home/steam/cs2-dedicated/
       ports:
-        - 27035:27015
+        - "27035:27015/tcp"
+        - "27035:27015/udp"
       stdin_open: true
       tty: true
       
